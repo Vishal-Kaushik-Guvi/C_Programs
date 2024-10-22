@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-void main(){
+int main(){
     int num;
     printf("Enter the number : ");
     scanf("%d", &num);
@@ -21,4 +21,6 @@ void main(){
     }else{
         printf("Number is not an Armstrong");
     }
+
+    return 0;
 }
