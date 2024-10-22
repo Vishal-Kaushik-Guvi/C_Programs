@@ -1,40 +1,42 @@
 #include<stdio.h>
 
-void Smallest(int arr[]){
-    int smallest= 0;
-for (int i = 0; i < 5; i++)
-{
-    for (int j = i+1; j < 5; j++)
-    {
-        if (arr[i]<arr[j])
-        {
-          smallest = arr[i];
-        }
-     }
-   }
-     printf("Smallest Element is : %d \n", smallest);
-}
+void Largest(int arr[], int len){
+   int left = 0;
+   int right = len-1;
 
-void Largest(int arr[]){
-    int largest =0;
-    for (int i = 0; i < 5; i++)
+   while (left<=right)
    {
-    for (int j = i+1; j < 5; j++)
+    if (arr[left]>arr[right])
     {
-        if (arr[i]>=arr[j])
-        {
-            largest = arr[i];
-        }
-     }
-   } 
-    printf("Largest Element is : %d \n", largest);
+       right--;
+    }else{
+       left++;
+    }
+   }
+   printf("Largest %d \n", arr[right]);
 }
 
+void Smallest(int arr[], int len){
+   int left = 0;
+   int right = len-1;
+
+   while (left<=right)
+   {
+    if (arr[left]<arr[right])
+    {
+       right--;
+    }else{
+       left++;
+    }
+   }
+   printf("Smallest %d \n", arr[right]);
+}
 
 int main(){
-int arr[] = {10,23,57,97,43};
-Smallest(arr);
-Largest(arr);
+int arr[] = {100,56,756,42,77,2,66,90};
+int len = sizeof(arr)/sizeof(arr[0]);
+Largest(arr, len);
+Smallest(arr, len);
 return 0;
 }
 
