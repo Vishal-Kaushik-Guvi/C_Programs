@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/hp/Desktop/C_Programs/Arrays",
-      "program": "c:/Users/hp/Desktop/C_Programs/Arrays/build/Debug/outDebug",
+      "cwd": "c:/Users/hp/Desktop/C_Programs/DataStructure",
+      "program": "c:/Users/hp/Desktop/C_Programs/DataStructure/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
