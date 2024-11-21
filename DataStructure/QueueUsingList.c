@@ -1,38 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SIZE 5
+struct Node {
+    int data;
+    struct Node* next;
+};
 
 typedef struct Queue {
-    int items[SIZE];
-    int front, rear;
+    struct Node* front;
+    struct Node* rear;
 } Queue;
 
 void initializeQueue(Queue* q) {
-    q->front = -1;
-    q->rear = -1;
+    q->front = NULL;
+    q->rear = NULL;
 }
 
 int isEmpty(Queue* q) {
-    return q->front == -1;
-}
-
-
-int isFull(Queue* q) {
-    return (q->rear + 1) % SIZE == q->front;
+    return q->front == NULL;
 }
 
 void enqueue(Queue* q, int value) {
-    if (isFull(q)) {
-        printf("Queue overflow! Cannot add %d.\n", value);
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Memory allocation failed! Cannot enqueue %d.\n", value);
         return;
     }
+    newNode->data = value;
+    newNode->next = NULL;
 
-    if (isEmpty(q)) {
-        q->front = 0;
+    if (q->rear == NULL) {
+        // If the queue is empty, front and rear both point to the new node
+        q->front = q->rear = newNode;
+    } else {
+        // Otherwise, add the new node at the rear and update the rear pointer
+        q->rear->next = newNode;
+        q->rear = newNode;
     }
-    q->rear = (q->rear + 1) % SIZE;
-    q->items[q->rear] = value;
     printf("Enqueued %d.\n", value);
 }
 
@@ -42,15 +46,17 @@ int dequeue(Queue* q) {
         return -1;
     }
 
-    int dequeuedValue = q->items[q->front];
+    int dequeuedValue = q->front->data;
+    struct Node* temp = q->front;
 
-    if (q->front == q->rear) {
+    q->front = q->front->next;
 
-        q->front = q->rear = -1;
-    } else {
-        q->front = (q->front + 1) % SIZE;
+    // If the queue becomes empty, set rear to NULL as well
+    if (q->front == NULL) {
+        q->rear = NULL;
     }
 
+    free(temp); // Free the memory of the dequeued node
     return dequeuedValue;
 }
 
@@ -59,10 +65,9 @@ int peek(Queue* q) {
         printf("Queue is empty! Nothing to peek.\n");
         return -1;
     }
-    return q->items[q->front];
+    return q->front->data;
 }
 
-// Main function
 int main() {
     Queue q;
     initializeQueue(&q);
@@ -111,6 +116,11 @@ int main() {
                 printf("Invalid choice! Try again.\n");
         }
     } while (choice != 5);
+
+    // Free remaining nodes
+    while (!isEmpty(&q)) {
+        dequeue(&q);
+    }
 
     return 0;
 }

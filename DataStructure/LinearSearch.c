@@ -13,11 +13,22 @@ int LinearSearch(int arr[], int len, int target){
 }
 
 int main(){
-    int arr[] = {10,20,50,40,30,67,54,34};
-    int len = sizeof(arr)/sizeof(arr[0]);
-    int target = 50;
+    int n;
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
 
-    int result = LinearSearch(arr,len,target);
+    int arr[n];
+
+    printf("Enter %d elements:\n", n);
+    for (int i = 0; i < n; i++) {
+        printf("Element %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+    int target;
+    printf("Enter the target : ");
+    scanf("%d", &target);
+
+    int result = LinearSearch(arr,n,target);
 
     printf("%d", result);
 

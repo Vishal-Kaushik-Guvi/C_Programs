@@ -27,11 +27,24 @@ int BinarySearch(int arr[], int len, int target){
 }
 
 int main(){
-    int arr[] = {10,54,32,67,84,34,67,22,90};
-    int len = sizeof(arr) / sizeof(arr[0]);
-    int target = 67;
+    int n;
 
-    int result = BinarySearch(arr,len,target);
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    printf("Enter %d elements:\n", n);
+    for (int i = 0; i < n; i++) {
+        printf("Element %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+
+    int target;
+    printf("Enter the target : ");
+    scanf("%d", &target);
+
+    int result = BinarySearch(arr,n,target);
     printf("%d", result);
 
     return 0;

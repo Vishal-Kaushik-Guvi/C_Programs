@@ -33,10 +33,21 @@ void Smallest(int arr[], int len){
 }
 
 int main(){
-int arr[] = {100,56,756,42,77,2,66,90};
-int len = sizeof(arr)/sizeof(arr[0]);
-Largest(arr, len);
-Smallest(arr, len);
+    int n;
+
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    printf("Enter %d elements:\n", n);
+    for (int i = 0; i < n; i++) {
+        printf("Element %d: ", i + 1);
+        scanf("%d", &arr[i]);
+    }
+
+Largest(arr, n);
+Smallest(arr, n);
 return 0;
 }
 
