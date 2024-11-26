@@ -1,27 +1,56 @@
-#include <stdio.h>
-#include <math.h>
+// C program to print 
+// diamond shape with 
+// 2n rows
+#include<stdio.h>
 
-int main(){
-    int n = 5;
+// Prints diamond 
+// pattern with 2n rows
+void printDiamond(int n)
+{
+    int space = n - 1;
 
+    // run loop (parent loop)
+    // till number of rows
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < abs(2*n); j++)
-        {
+        // loop for initially space, 
+        // before star printing
+        for (int j = 0;j < space; j++)
             printf(" ");
-        }
-        for (int k = 0; k < abs(i-1); k++)
-        {
-            printf("*");
-        }
-        printf("\n");  
+
+        // Print i+1 stars
+        for (int j = 0;j <= i; j++)
+            printf("* ");
+
+        printf("\n");
+        space--;
     }
-    
+
+    // Repeat again in 
+    // reverse order
+    space = 0;
+
+    // run loop (parent loop)
+    // till number of rows
+    for (int i = n; i > 0; i--)
+    {
+        // loop for initially space, 
+        // before star printing
+        for (int j = 0; j < space; j++)
+            printf(" ");
+
+        // Print i stars
+        for (int j = 0;j < i;j++)
+            printf("* ");
+
+        printf("\n");
+        space++;
+    }
 }
 
-//                                       left Space    Stars     RightSpace          
-//    *                                      2           1          2
-//   ***                                     1           3          1
-//  *****                                    0           5          0
-//   ***                                     1           3          1
-//    *                                      2           1          2
+// Driver code
+int main()
+{
+    printDiamond(5);
+    return 0;
+}
