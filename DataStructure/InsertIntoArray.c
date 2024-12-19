@@ -10,26 +10,26 @@ int main() {
 
     printf("Enter %d elements:\n", n);
     for (int i = 0; i < n; i++) {
-        printf("Element %d: ", i + 1);
+        printf("Element %d: ", i);
         scanf("%d", &arr[i]);
     }
 
     printf("Enter the element to insert: ");
     scanf("%d", &element);
-    printf("Enter the position to insert (1 to %d): ", n + 1);
+    printf("Enter the position to insert (0 to %d): ", n);
     scanf("%d", &position);
 
-    if (position < 1 || position > n + 1) {
+    if (position < 0 || position > n) {
         printf("Invalid position!\n");
         return 1;
     }
 
-    for (int i = n; i >= position; i--) {
+    for (int i = n; i > position; i--) {
         arr[i] = arr[i - 1];
     }
 
 
-    arr[position - 1] = element;
+    arr[position] = element;
 
     printf("The updated array is:\n");
     for (int i = 0; i <= n; i++) {

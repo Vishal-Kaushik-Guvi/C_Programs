@@ -1,11 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Define global variables for head and tail
+struct Node* head = NULL;
+struct Node* tail = NULL;
+
+// Node structure
 struct Node {
     int data;
     struct Node* next;
 };
 
+// Create a new node
 struct Node* createNode(int data) {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     if (!newNode) {
@@ -17,68 +23,75 @@ struct Node* createNode(int data) {
     return newNode;
 }
 
-void addNode(struct Node** tail, int data) {
+// Add a node to the circular linked list
+void addNode(int data) {
     struct Node* newNode = createNode(data);
-    if (*tail == NULL) {
-        *tail = newNode;
-        (*tail)->next = newNode;
+    if (tail == NULL) {
+        head = tail = newNode;
+        tail->next = head;  // Circular link
     } else {
-        newNode->next = (*tail)->next;
-        (*tail)->next = newNode;
-        *tail = newNode;
+        newNode->next = head;
+        tail->next = newNode;
+        tail = newNode;
     }
     printf("Node with value %d added.\n", data);
 }
 
-void deleteNode(struct Node** tail, int key) {
-    if (*tail == NULL) {
+// Delete a node from the circular linked list
+void deleteNode(int key) {
+    if (tail == NULL) {
         printf("List is empty! Nothing to delete.\n");
         return;
     }
 
-    struct Node *current = (*tail)->next, *prev = *tail;
+    struct Node *current = head, *prev = tail;
 
-    if ((*tail)->next == *tail && (*tail)->data == key) {
-        free(*tail);
-        *tail = NULL;
+    if (head == tail && head->data == key) {  // Single node case
+        free(head);
+        head = tail = NULL;
         printf("Node with value %d deleted. List is now empty.\n", key);
         return;
     }
 
     do {
         if (current->data == key) {
-            if (current == *tail) {
-                *tail = prev;
+            if (current == head) {  // Delete head
+                head = head->next;
+                tail->next = head;
+            } else if (current == tail) {  // Delete tail
+                tail = prev;
+                tail->next = head;
+            } else {  // Delete intermediate node
+                prev->next = current->next;
             }
-            prev->next = current->next;
             free(current);
             printf("Node with value %d deleted.\n", key);
             return;
         }
         prev = current;
         current = current->next;
-    } while (current != (*tail)->next);
+    } while (current != head);
 
     printf("Node with value %d not found!\n", key);
 }
 
-void displayList(struct Node* tail) {
+// Display the circular linked list
+void displayList() {
     if (tail == NULL) {
         printf("List is empty!\n");
         return;
     }
 
-    struct Node* current = tail->next;
+    struct Node* current = head;
     printf("Circular Linked List: ");
     do {
         printf("%d -> ", current->data);
         current = current->next;
-    } while (current != tail->next);
+    } while (current != head);
     printf("(head)\n");
 }
 
 int main() {
-    struct Node* tail = NULL;
     int choice, value;
 
     do {
@@ -94,15 +107,15 @@ int main() {
             case 1:
                 printf("Enter value to add: ");
                 scanf("%d", &value);
-                addNode(&tail, value);
+                addNode(value);
                 break;
             case 2:
                 printf("Enter value to delete: ");
                 scanf("%d", &value);
-                deleteNode(&tail, value);
+                deleteNode(value);
                 break;
             case 3:
-                displayList(tail);
+                displayList();
                 break;
             case 4:
                 printf("Exiting...\n");

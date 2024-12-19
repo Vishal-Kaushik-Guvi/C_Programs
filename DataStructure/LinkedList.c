@@ -7,29 +7,32 @@ struct Node {
     struct Node* next;
 };
 
+// Declare head as a global variable
+struct Node* head = NULL;
+
 // Function to create a new node
 struct Node* createNode(int data) {
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* newNode = malloc(sizeof(struct Node));
     newNode->data = data;
     newNode->next = NULL;
     return newNode;
 }
 
 // Function to insert a node at the beginning
-void insertAtBeginning(struct Node** head, int data) {
+void insertAtBeginning(int data) {
     struct Node* newNode = createNode(data);
-    newNode->next = *head;
-    *head = newNode;
+    newNode->next = head;
+    head = newNode;
 }
 
 // Function to insert a node at the end
-void insertAtEnd(struct Node** head, int data) {
+void insertAtEnd(int data) {
     struct Node* newNode = createNode(data);
-    if (*head == NULL) {
-        *head = newNode;
+    if (head == NULL) {
+        head = newNode;
         return;
     }
-    struct Node* temp = *head;
+    struct Node* temp = head;
     while (temp->next != NULL) {
         temp = temp->next;
     }
@@ -48,14 +51,14 @@ void insertAfterNode(struct Node* prevNode, int data) {
 }
 
 // Function to delete a node with a specific value
-void deleteNode(struct Node** head, int key) {
-    struct Node* temp = *head;
+void deleteNode(int key) {
+    struct Node* temp = head;
     struct Node* prev = NULL;
 
     // If the head node itself holds the key
     if (temp != NULL && temp->data == key) {
-        *head = temp->next; // Change head
-        free(temp);         // Free old head
+        head = temp->next; // Change head
+        free(temp);        // Free old head
         return;
     }
 
@@ -76,7 +79,7 @@ void deleteNode(struct Node** head, int key) {
 }
 
 // Function to display the linked list
-void displayList(struct Node* head) {
+void displayList() {
     struct Node* temp = head;
     while (temp != NULL) {
         printf("%d -> ", temp->data);
@@ -87,24 +90,18 @@ void displayList(struct Node* head) {
 
 // Main function
 int main() {
-    struct Node* head = NULL;
-
     // Perform operations
-    insertAtBeginning(&head, 10);
-    insertAtEnd(&head, 20);
-    insertAtEnd(&head, 30);
-    insertAtBeginning(&head, 5);
+    insertAtBeginning(1);
+    insertAtEnd(2);
+    insertAtEnd(3);
+    insertAtBeginning(0);
 
     printf("Linked List after insertions:\n");
-    displayList(head);
+    displayList();
 
-    deleteNode(&head, 20);
-    printf("Linked List after deletion of 20:\n");
-    displayList(head);
-
-    insertAfterNode(head->next, 25);
-    printf("Linked List after inserting 25 after the second node:\n");
-    displayList(head);
+    deleteNode(2);
+    printf("Linked List after deletion of 2:\n");
+    displayList();
 
     return 0;
 }
